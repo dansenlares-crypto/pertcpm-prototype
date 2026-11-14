@@ -106,6 +106,12 @@ with st.sidebar:
                        file_name="pertcpm_template.csv", mime="text/csv", use_container_width=True)
 
 st.title("Web-based PERT/CPM scheduling prototype")
+st.caption(
+    "Researchers: Fhelences Posa, Mari Kaithlyn Martinez, Christian Pabadora, "
+    "Carl Jerald Ventura, and Francine Villanueva  |  "
+    "Adviser: Sherwin R. Trinidad, LPT, MEAM, CSSYB  |  "
+    "University of Perpetual Help System Dalta, School of Aviation"
+)
 st.info("Educational use only. Durations are in the unit you selected; links are finish-to-start with zero lag.")
 if st.session_state.notice:
     st.success(st.session_state.notice)
