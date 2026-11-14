@@ -1,0 +1,5 @@
+id,name,predecessors,o,m,p,milestone,unit
+A,Stage A,,3,3,3,,hours
+B,Stage B,,5,5,5,,hours
+C,Stage C,"A, B",2,2,2,,hours
+D,Stage D,B,4,4,4,,hours
