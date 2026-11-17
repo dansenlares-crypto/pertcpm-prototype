@@ -76,6 +76,8 @@ init_state()
 with st.sidebar:
     st.header("PERT/CPM prototype")
     st.caption(f"Version {e.APP_VERSION}")
+    st.caption("Researchers: Fhelences Posa, Mari Kaithlyn Martinez, Christian Pabadora, Carl Jerald Ventura, "
+               "Francine Villanueva. Adviser: Sherwin R. Trinidad, LPT, MEAM, CSSYB.")
     st.warning(e.EDUCATIONAL_STATEMENT)
     st.selectbox("Time unit for this dataset", UNITS, key="unit",
                  help="One unit for every activity. Change it before entering durations.")
@@ -106,6 +108,9 @@ with st.sidebar:
                        file_name="pertcpm_template.csv", mime="text/csv", use_container_width=True)
 
 st.title("Web-based PERT/CPM scheduling prototype")
+st.caption("Researchers: Fhelences Posa, Mari Kaithlyn Martinez, Christian Pabadora, Carl Jerald Ventura, "
+           "Francine Villanueva. Adviser: Sherwin R. Trinidad, LPT, MEAM, CSSYB. "
+           "School of Aviation, University of Perpetual Help System Dalta.")
 st.info("Educational use only. Durations are in the unit you selected; links are finish-to-start with zero lag.")
 if st.session_state.notice:
     st.success(st.session_state.notice)
