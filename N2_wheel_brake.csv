@@ -1,0 +1,9 @@
+id,name,predecessors,o,m,p,milestone,unit
+A,"Jack aircraft, depressurize brake system",,1,1.5,2,,hours
+B,Remove wheel and brake assembly,A,1,2,3,,hours
+C,"Inspect axle, bearings and brake components",B,2,2.5,3,,hours
+D,"Draw replacement wheel and brake unit, check release certificates",,1,2,6,,hours
+E,"Mount new tire on wheel, check pressure and balance",D,2,3,4,,hours
+F,"Install wheel and brake assembly, torque","C, E",2,2.5,3,,hours
+G,"Bleed brakes, service tire pressure",F,1,1.5,2,,hours
+H,"Lower aircraft, brake functional check, complete records",G,0.5,1,1.5,,hours

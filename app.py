@@ -57,6 +57,10 @@ def load_example():
     load_rows(e.example_n1(), unit="hours")
 
 
+def load_example2():
+    load_rows(e.example_n2(), unit="hours")
+
+
 def reset_all():
     ss = st.session_state
     ss.base_df = pd.DataFrame({c: pd.Series(dtype="object") for c in COLS})
@@ -82,6 +86,7 @@ with st.sidebar:
     st.selectbox("Time unit for this dataset", UNITS, key="unit",
                  help="One unit for every activity. Change it before entering durations.")
     st.button("Load example network N1", on_click=load_example, use_container_width=True)
+    st.button("Load example network N2", on_click=load_example2, use_container_width=True)
     st.button("Reset (clear inputs and results)", on_click=reset_all, use_container_width=True)
     up = st.file_uploader("Import activities from CSV", type=["csv"],
                           help="Columns: id, name, predecessors, o, m, p, milestone, unit (optional).")

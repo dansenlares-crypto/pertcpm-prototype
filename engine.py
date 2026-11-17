@@ -511,6 +511,20 @@ def example_n1() -> list[dict]:
              "milestone": False, "unit": DEFAULT_UNIT} for i, n, pr, h in spec]
 
 
+def example_n2() -> list[dict]:
+    """Example network N2: main wheel and brake assembly replacement (three-point estimates, hours)."""
+    spec = [("A", "Jack aircraft, depressurize brake system", "", 1, 1.5, 2),
+            ("B", "Remove wheel and brake assembly", "A", 1, 2, 3),
+            ("C", "Inspect axle, bearings and brake components", "B", 2, 2.5, 3),
+            ("D", "Draw replacement wheel and brake unit, check release certificates", "", 1, 2, 6),
+            ("E", "Mount new tire on wheel, check pressure and balance", "D", 2, 3, 4),
+            ("F", "Install wheel and brake assembly, torque", "C, E", 2, 2.5, 3),
+            ("G", "Bleed brakes, service tire pressure", "F", 1, 1.5, 2),
+            ("H", "Lower aircraft, brake functional check, complete records", "G", 0.5, 1, 1.5)]
+    return [{"id": i, "name": n, "predecessors": pr, "o": o, "m": m, "p": p,
+             "milestone": False, "unit": DEFAULT_UNIT} for i, n, pr, o, m, p in spec]
+
+
 def clean_rows(records: Iterable[dict]) -> list[dict]:
     """Drop completely empty table rows (added by the editor) but keep partially filled ones
     so that validation can report them."""
