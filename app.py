@@ -102,16 +102,10 @@ with st.sidebar:
                     st.rerun()
         except Exception as exc:  # unreadable file
             st.error(f"Could not read the CSV: {exc}")
-    st.download_button("Download CSV template", data="id,name,predecessors,o,m,p,milestone\nA,Stage A,,2,2,2,\n",
+    st.download_button("Download CSV template", data="id,name,predecessors,o,m,p,milestone\nA,Open access panels,,2,2,2,\n",
                        file_name="pertcpm_template.csv", mime="text/csv", use_container_width=True)
 
 st.title("Web-based PERT/CPM scheduling prototype")
-st.caption(
-    "Researchers: Fhelences Posa, Mari Kaithlyn Martinez, Christian Pabadora, "
-    "Carl Jerald Ventura, and Francine Villanueva  |  "
-    "Adviser: Sherwin R. Trinidad, LPT, MEAM, CSSYB  |  "
-    "University of Perpetual Help System Dalta, School of Aviation"
-)
 st.info("Educational use only. Durations are in the unit you selected; links are finish-to-start with zero lag.")
 if st.session_state.notice:
     st.success(st.session_state.notice)
@@ -271,10 +265,10 @@ with tab_diag:
         choices = ["Baseline"] + (["Scenario"] if scn_result else [])
         which = st.radio("Show", choices, horizontal=True)
         res = scn_result.scenario if (which == "Scenario" and scn_result) else base
-        fig = diagram.draw(res, which)
+        fig = diagram.draw(res, which, {a.id: a.name for a in acts})
         st.pyplot(fig, clear_figure=True)
         buf = io.BytesIO()
-        fig2 = diagram.draw(res, which)
+        fig2 = diagram.draw(res, which, {a.id: a.name for a in acts})
         fig2.savefig(buf, format="png", dpi=200)
         st.download_button("Download diagram (PNG)", data=buf.getvalue(),
                            file_name=f"pertcpm_{e.fingerprint(acts, scn_result.changes if (which == 'Scenario' and scn_result) else None)}_diagram.png",

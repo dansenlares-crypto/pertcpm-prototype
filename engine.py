@@ -501,9 +501,14 @@ def to_rows(acts: list[Activity]) -> list[dict]:
 
 def example_n1() -> list[dict]:
     """Acceptance network N1 (Appendix C, Table C1). Durations as O = M = P = hours."""
-    spec = [("A", "", 2), ("B", "A", 6), ("C", "A", 3), ("D", "B", 4), ("E", "C, D", 2), ("F", "E", 1)]
-    return [{"id": i, "name": f"Stage {i}", "predecessors": pr, "o": h, "m": h, "p": h,
-             "milestone": False, "unit": DEFAULT_UNIT} for i, pr, h in spec]
+    spec = [("A", "Open access panels, inspect pump bay", "", 2),
+            ("B", "Drain system, remove old hydraulic pump", "A", 6),
+            ("C", "Draw new pump from stores, check release certificate", "A", 3),
+            ("D", "Install new pump, connect lines", "B", 4),
+            ("E", "Leak test and functional check", "C, D", 2),
+            ("F", "Close panels, complete task records", "E", 1)]
+    return [{"id": i, "name": n, "predecessors": pr, "o": h, "m": h, "p": h,
+             "milestone": False, "unit": DEFAULT_UNIT} for i, n, pr, h in spec]
 
 
 def clean_rows(records: Iterable[dict]) -> list[dict]:

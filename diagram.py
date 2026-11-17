@@ -2,6 +2,7 @@
 Each box shows ID, duration, ES and EF; critical activities and links are highlighted
 with both colour and a thicker outline so meaning does not depend on colour alone."""
 from __future__ import annotations
+import textwrap
 
 import matplotlib
 matplotlib.use("Agg")
@@ -31,11 +32,12 @@ def layout(res: e.CPMResult):
     return pos, cols
 
 
-def draw(res: e.CPMResult, title: str = ""):
+def draw(res: e.CPMResult, title: str = "", names: dict | None = None):
+    names = names or {}
     pos, cols = layout(res)
     ncols = max(cols) + 1
     nrows = max(len(v) for v in cols.values())
-    w, h = 1.9, 0.9
+    w, h = 1.9, 1.25
     fig, ax = plt.subplots(figsize=(max(6, 2.4 * ncols), max(3, 1.5 * nrows + 1)), dpi=110)
     crit = set(res.critical)
     crit_edges = set()
@@ -60,11 +62,16 @@ def draw(res: e.CPMResult, title: str = ""):
         ax.add_patch(FancyBboxPatch((X(n) - w / 2, Y(n) - h / 2), w, h, boxstyle="round,pad=0.02,rounding_size=0.08",
                                     fc=FILL_CRIT if c else FILL_NORM, ec=CRIT if c else NORM,
                                     lw=2.6 if c else 1.0, zorder=2))
-        ax.text(X(n), Y(n) + 0.22, f"{n}  ({e.fmt(res.duration[n])} {res.unit[0]})", ha="center", va="center",
+        nm = textwrap.wrap(names.get(n, ""), 26)
+        if len(nm) > 2:
+            nm = [nm[0], nm[1][:23] + "..."]
+        ax.text(X(n), Y(n) + 0.36, "\n".join(nm), ha="center", va="center", fontsize=6.5,
+                color="#101828", linespacing=1.15, zorder=3)
+        ax.text(X(n), Y(n) + 0.02, f"{n}  ({e.fmt(res.duration[n])} {res.unit[0]})", ha="center", va="center",
                 fontsize=9, fontweight="bold", color="#101828", zorder=3)
-        ax.text(X(n), Y(n) - 0.08, f"ES {e.fmt(res.es[n])}   EF {e.fmt(res.ef[n])}", ha="center", va="center",
+        ax.text(X(n), Y(n) - 0.2, f"ES {e.fmt(res.es[n])}   EF {e.fmt(res.ef[n])}", ha="center", va="center",
                 fontsize=7.5, color="#344054", zorder=3)
-        ax.text(X(n), Y(n) - 0.30, f"LS {e.fmt(res.ls[n])}   LF {e.fmt(res.lf[n])}   float {e.fmt(res.total_float[n])}",
+        ax.text(X(n), Y(n) - 0.42, f"LS {e.fmt(res.ls[n])}   LF {e.fmt(res.lf[n])}   float {e.fmt(res.total_float[n])}",
                 ha="center", va="center", fontsize=6.5, color="#667085", zorder=3)
     ax.set_xlim(-w, X(max(res.order, key=lambda n: pos[n][0])) + w)
     ys = [Y(n) for n in res.order]
